@@ -20,6 +20,13 @@ public abstract class BaseFragment extends Fragment {
     private Unbinder viewBinder;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mainThreadHandler = App.get(context).applicationComponent().mainThreadHandler();

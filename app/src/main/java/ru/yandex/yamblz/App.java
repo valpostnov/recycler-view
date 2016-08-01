@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import ru.yandex.yamblz.developer_settings.DevMetricsProxy;
 import ru.yandex.yamblz.developer_settings.DeveloperSettingsModel;
+import ru.yandex.yamblz.ui.other.PreferencesManager;
 import timber.log.Timber;
 
 public class App extends Application {
@@ -31,6 +32,8 @@ public class App extends Application {
             DevMetricsProxy devMetricsProxy = applicationComponent.devMetricsProxy();
             devMetricsProxy.apply();
         }
+
+        PreferencesManager.init(getApplicationContext());
     }
 
     @NonNull

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Yamblz</string>
     <string name="content">Hello</string>
+    <string name="action_two_columns">2 колонки</string>
+    <string name="action_three_columns">3 колонки</string>
+    <string name="action_thirty_columns">30 колонок</string>
 </resources>
