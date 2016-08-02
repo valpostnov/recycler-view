@@ -11,9 +11,8 @@ import static android.support.v7.widget.helper.ItemTouchHelper.*;
  */
 public class SimpleItemTouchHelper extends Callback
 {
+    private static final int rgb = 255;
     private ItemTouchHelperAdapter helperAdapter;
-    private float currentDx;
-    private int blueGreen = 255;
 
     public SimpleItemTouchHelper(ItemTouchHelperAdapter helperAdapter)
     {
@@ -61,35 +60,14 @@ public class SimpleItemTouchHelper extends Callback
         {
             case ACTION_STATE_SWIPE:
 
-                if (dX > currentDx)
-                {
-                    if (blueGreen >= 0) blueGreen -= 10;
-
-                    int color = Color.rgb(255, blueGreen, blueGreen);
-                    c.drawColor(color);
-                    currentDx = dX;
-                }
-                else
-                {
-                    blueGreen = 255;
-                    currentDx = dX;
-                }
-
+                final int greenAndBlue = (int) (rgb - Math.abs(dX) / 2);
+                int color;
+                if (greenAndBlue > 0) color = Color.rgb(rgb, greenAndBlue, greenAndBlue);
+                else color = Color.rgb(rgb, rgb, rgb);
+                c.drawColor(color);
                 break;
         }
 
         super.onChildDraw(c, recycler, holder, dX, dY, actionState, isCurrentlyActive);
-    }
-
-    @Override
-    public void onChildDrawOver(Canvas c, RecyclerView recycler, RecyclerView.ViewHolder holder,
-                                float dX, float dY, int actionState, boolean isCurrentlyActive)
-    {
-        switch (actionState)
-        {
-            case ACTION_STATE_DRAG:
-
-        }
-        super.onChildDrawOver(c, recycler, holder, dX, dY, actionState, isCurrentlyActive);
     }
 }
