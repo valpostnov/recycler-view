@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import ru.yandex.yamblz.R;
 import ru.yandex.yamblz.ui.adapters.ContentAdapter;
+import ru.yandex.yamblz.ui.recyclerview.SimpleItemAnimator;
+import ru.yandex.yamblz.ui.recyclerview.SimpleItemDecorator;
 import ru.yandex.yamblz.ui.recyclerview.SimpleItemTouchHelper;
 
-public class ContentFragment extends BaseFragment {
-
+public class ContentFragment extends BaseFragment implements ContentAdapter.OnItemClickListener
+{
     private GridLayoutManager gridLayoutManager;
     private static final int SPAN_COUNT_DEF = 2;
     private ContentAdapter adapter;
@@ -42,7 +44,12 @@ public class ContentFragment extends BaseFragment {
     {
         super.onViewCreated(view, savedInstanceState);
         gridLayoutManager = new GridLayoutManager(getContext(), SPAN_COUNT_DEF);
+
         adapter = new ContentAdapter();
+        adapter.setOnItemClickListener(this);
+
+        rv.addItemDecoration(new SimpleItemDecorator());
+        rv.setItemAnimator(new SimpleItemAnimator());
         rv.setLayoutManager(gridLayoutManager);
         rv.setAdapter(adapter);
 
@@ -78,5 +85,11 @@ public class ContentFragment extends BaseFragment {
         int firstItem = gridLayoutManager.findFirstVisibleItemPosition();
         gridLayoutManager.setSpanCount(spanCount);
         adapter.notifyItemRangeChanged(firstItem, 0);
+    }
+
+    @Override
+    public void onClick(int position)
+    {
+        adapter.notifyItemChanged(position);
     }
 }

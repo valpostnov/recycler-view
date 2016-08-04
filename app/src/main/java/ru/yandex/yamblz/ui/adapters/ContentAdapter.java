@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -19,8 +20,17 @@ import ru.yandex.yamblz.ui.recyclerview.ItemTouchHelperAdapter;
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder>
         implements ItemTouchHelperAdapter
 {
+    private static OnItemClickListener sOnItemClickListener;
     private final Random rnd = new Random();
     private final List<Integer> colors = new ArrayList<>();
+    private int fromPosition = -1;
+    private int toPosition = -1;
+
+
+    public interface OnItemClickListener
+    {
+        void onClick(int position);
+    }
 
     @Override
     public ContentHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -46,8 +56,11 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
         {
             colors.add(Color.rgb(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255)));
         }
+        else
+        {
+            colors.add(position, Color.rgb(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255)));
+        }
 
-        Log.d("Adapter", "size: " + colors.size());
         return colors.get(position);
     }
 
@@ -56,7 +69,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
     {
         Collections.swap(colors, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
-
+        this.fromPosition = fromPosition;
+        this.toPosition = toPosition;
     }
 
     @Override
@@ -66,11 +80,22 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
         notifyItemRemoved(position);
     }
 
-    static class ContentHolder extends RecyclerView.ViewHolder
+    public int getFromPosition()
+    {
+        return fromPosition;
+    }
+
+    public int getToPosition()
+    {
+        return toPosition;
+    }
+
+    public static class ContentHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         ContentHolder(View itemView)
         {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
 
         void bind(Integer color)
@@ -78,5 +103,16 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
             itemView.setBackgroundColor(color);
             ((TextView) itemView).setText("#".concat(Integer.toHexString(color).substring(2)));
         }
+
+        @Override
+        public void onClick(View v)
+        {
+            sOnItemClickListener.onClick(getAdapterPosition());
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        sOnItemClickListener = listener;
     }
 }
