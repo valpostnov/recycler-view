@@ -16,6 +16,7 @@ import static android.graphics.Paint.Style.STROKE;
 public class SimpleItemDecorator extends RecyclerView.ItemDecoration
 {
     private static final int STROKE_WIDTH = 10;
+    private static final int OFFSET = 10;
     private final Paint paint;
     private final Rect rect;
 
@@ -30,6 +31,7 @@ public class SimpleItemDecorator extends RecyclerView.ItemDecoration
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state)
     {
+
         final ContentAdapter adapter = (ContentAdapter) parent.getAdapter();
         final int childCount = parent.getChildCount();
         final RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
@@ -53,11 +55,14 @@ public class SimpleItemDecorator extends RecyclerView.ItemDecoration
                 c.drawRect(rect, paint);
             }
         }
+
+        super.onDrawOver(c, parent, state);
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
     {
-        //outRect.set(10, 10, 10, 10);
+        final int position = parent.getChildAdapterPosition(view);
+        if (position % 2 == 0) outRect.set(OFFSET, OFFSET, OFFSET, OFFSET);
     }
 }

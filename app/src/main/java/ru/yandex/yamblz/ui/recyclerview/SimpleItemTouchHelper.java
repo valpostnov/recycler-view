@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import static android.support.v7.widget.helper.ItemTouchHelper.*;
@@ -68,7 +69,7 @@ public class SimpleItemTouchHelper extends Callback
         {
             case ACTION_STATE_SWIPE:
 
-                final int greenAndBlue = (int) (RGB - Math.abs(dX) / 2);
+                final int greenAndBlue = (int) (RGB - Math.abs(dX) / 3);
 
                 if (greenAndBlue > 0)
                 {

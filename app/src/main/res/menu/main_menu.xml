@@ -2,16 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_random_columns"
-        android:title="@string/action_random_columns"
-        android:orderInCategory="99"
-        app:showAsAction="ifRoom"
-        />
 
     <item
-        android:id="@+id/action_two_columns"
-        android:title="@string/action_two_columns"
+        android:id="@+id/action_one_column"
+        android:title="@string/action_one_column"
         android:orderInCategory="100"
         app:showAsAction="never"
         />

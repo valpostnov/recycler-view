@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import ru.yandex.yamblz.R;
 import ru.yandex.yamblz.ui.adapters.ContentAdapter;
+import ru.yandex.yamblz.ui.recyclerview.SimpleGridLayoutManager;
 import ru.yandex.yamblz.ui.recyclerview.SimpleItemAnimator;
 import ru.yandex.yamblz.ui.recyclerview.SimpleItemDecorator;
 import ru.yandex.yamblz.ui.recyclerview.SimpleItemTouchHelper;
@@ -21,7 +22,7 @@ import ru.yandex.yamblz.ui.recyclerview.SimpleItemTouchHelper;
 public class ContentFragment extends BaseFragment implements ContentAdapter.OnItemClickListener
 {
     private GridLayoutManager gridLayoutManager;
-    private static final int SPAN_COUNT_DEF = 2;
+    private static final int SPAN_COUNT_DEF = 1;
     private ContentAdapter adapter;
 
     @BindView(R.id.rv)
@@ -63,8 +64,8 @@ public class ContentFragment extends BaseFragment implements ContentAdapter.OnIt
     {
         switch (item.getItemId())
         {
-            case R.id.action_two_columns:
-                changeSpanCount(2);
+            case R.id.action_one_column:
+                changeSpanCount(1);
                 return true;
 
             case R.id.action_three_columns:
